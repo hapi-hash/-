@@ -1,5 +1,5 @@
 import { Login } from "@/api/login";
-import { setToken, setUsername, getUsername, removeToken, removeUsername } from "@/utils/app";
+import { setToken, setUsername, getUsername, removeAll, removeToken, removeUsername } from "@/utils/app";
 const state = {
     isCollapse: JSON.parse(sessionStorage.getItem('isCollapse')) || false,
     to_ken: '',
@@ -50,8 +50,7 @@ const actions = { //可以回调处理事情
     },
     exit(content){
         return new Promise((resolve,reject) => {
-            removeToken()
-            removeUsername()
+            removeAll()
             content.commit('SET_TOKEN','')
             content.commit('SET_USERNAME','')
             resolve()

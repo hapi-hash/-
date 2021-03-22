@@ -12,6 +12,7 @@
     "axios": "^0.20.0",
     "cookie_js": "^1.4.0",
     "core-js": "^3.6.5",
+    "echarts": "^5.0.2",
     "element-ui": "^2.13.2",
     "js-sha1": "^0.6.0",
     "svg-sprite-loader": "^5.0.0",

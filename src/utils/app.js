@@ -1,32 +1,33 @@
-import cookie from "cookie_js";
 
 const adminToken = "admin_token";
 const usernamekey = "username";
 //取token
 export function getToken(){
-    return cookie.get(adminToken);
+    return sessionStorage.getItem(adminToken);
 }
 //存token
 export function setToken(token){
-    return cookie.set(adminToken,token)
+    return sessionStorage.setItem(adminToken,token)
 }
 //删除token
 export function removeToken(){
-    return cookie.remove(adminToken);
+    return sessionStorage.removeItem(adminToken);
 }
 
 //如果有用户信息
-
+export function removeAll(){
+    return sessionStorage.clear();
+}
 //存用户名字
 export function setUsername(value){
-    return cookie.set(usernamekey,value)
+    return sessionStorage.setItem(usernamekey,value)
 }
 
 //取用户名字
 export function getUsername(){
-    return cookie.get(usernamekey)
+    return sessionStorage.getItem(usernamekey)
 }
 //删除用户名字
 export function removeUsername(){
-    return cookie.remove(usernamekey);
+    return sessionStorage.removeItem(usernamekey);
 }

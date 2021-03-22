@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
-
+import { getToken } from "@/utils/app";
 
 //创建axios，赋给变量service
 const BASEURL = process.env.NODE_ENV === "production" ? "" : "/api";
@@ -8,7 +8,6 @@ const service = axios.create({
     baseURL: BASEURL,//域名地址
     timeout: 15000, //超时
 });
-
 /**
  * 请求接口前，做一些数据处理（请求拦截器）
  */
@@ -16,11 +15,12 @@ service.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     //配合后台在请求头传一下需要的参数
 
-
     // console.log(config.headers)
-
+    if(getToken()){
+        config.headers.Token = getToken()
+    }
     //在请求头添加参数
-    // config.headers.Token = "1111111"
+    
     // config.headers.userId = "22222"
     // config.headers.uid = "333"
     return config;
