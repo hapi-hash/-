@@ -3,6 +3,9 @@ import service from "@/utils/request"
 /**
  * 获取验证码接口
  */
+export function aa(){
+    console.log(111)
+}
 export  function GetSms(data){
     return service.request({
         method: 'post',
