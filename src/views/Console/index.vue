@@ -1,6 +1,7 @@
 <template>
     <div>
         <div id="myChart" :style="{width: '300px', height: '300px'}"></div>
+        <div>122131313</div>
     </div>
 </template>
 <script>
