@@ -4,7 +4,9 @@ const state = {
     isCollapse: JSON.parse(sessionStorage.getItem('isCollapse')) || false,
     to_ken: '',
     //判断username是否存在
-    username: getUsername() || ''
+    username: getUsername() || '',
+    rouChilder: {},
+    topNavState: sessionStorage.getItem('topNavState') || '',
 }
 
 const getters = {
@@ -22,6 +24,13 @@ const mutations = {
     },
     SET_USERNAME(state, value){
         state.username = value
+    },
+    ROU_CHILDER(state,value){ //必须的 同步 没有回调处理事情
+        state.rouChilder = value
+    },
+    TOPNAVSRTATE(state, value){
+        state.topNavState = value
+        sessionStorage.setItem('topNavState',value)
     }
 }
 

@@ -1,5 +1,6 @@
 <template>
     <div id="infoIndex">
+        11111
         <!-- <transition-group name="flip-list">
             <div v-for="item in items" :key="item" draggable="true" class="items" @dragstart="dragstart(item)" @dragenter="dragenter(item)" @dragend="dragend(item)">{{item}}</div>
         </transition-group>

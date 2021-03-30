@@ -178,12 +178,12 @@ export default {
                         console.log(response)
                         // 登录成功跳转的地址
                         this.$router.push({
-                            name:'Console'
+                            name:'Components'
                         })
                     }).catch((error) => {
                         console.log(error)
                         this.$router.push({
-                            name:'Console'
+                            name:'Components'
                         })
                     })
                     // this.$router.push({

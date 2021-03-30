@@ -15,7 +15,7 @@ router.beforeEach((to, from, next) => {
       removeToken()
       removeUsername()
       store.commit("app/SET_TOKEN", '')
-      store.commit("app/SET_USERNAMEz ", '')
+      store.commit("app/SET_USERNAME", '')
       next()
     }
     next()
