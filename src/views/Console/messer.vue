@@ -1,5 +1,5 @@
 <template>
-    <div>11111</div>
+    <div>企业信息</div>
 </template>
 <script>
 import { defineComponent } from '@vue/composition-api'

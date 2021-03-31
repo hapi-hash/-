@@ -1,6 +1,6 @@
 <template>
-    <div id="nav-wrap">
-        <h1 class="logo"><img src="@/assets/logo.png" alt=""></h1>   
+    <div id="nav-wrap"  >
+        <h1 class="logo"><img src="@/assets/logo.png" alt=""></h1>
         <!-- <div>
             <el-menu
             background-color="#545c64"
@@ -12,18 +12,19 @@
             {{$route.path}}
             <NavSide :navMenus="routers"></NavSide>
             </el-menu>
-            
+
         </div> -->
-          <el-menu 
-            :default-active="$route.path" 
-            class="el-menu-vertical-demo" 
-            :collapse="isCollapse" 
+          <el-menu
+            :default-active="$route.path"
+            class="el-menu-vertical-demo"
+            :collapse="isCollapse"
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
-            :router='true'>
+            router
+           >
 
-            <template v-for="(item, index) in routers">
+            <template v-for="(item, index) in routers" v-if="routers.length">
                 <el-submenu v-if="item.children" :key="index" :index="index + ''">
                   <!-- 一级菜单 -->
                     <template slot="title" v-if="item.children">
@@ -33,7 +34,7 @@
                     <!-- 子级菜单 -->
                     <el-menu-item v-for="subItem in item.children" :key="subItem.id" :index="subItem.path">{{ subItem.meta.name }}</el-menu-item>
                 </el-submenu>
-                <el-menu-item v-else :index="item.path" :key="index+'a'">{{ item.meta.name }}</el-menu-item>
+                <el-menu-item v-else :index="item.path" :key="index">{{ item.meta.name }}</el-menu-item>
             </template>
         </el-menu>
         <!-- <div class="navMenu">
@@ -44,7 +45,7 @@
                 <i :class="navMenu.entity.icon"></i>
                 <span slot="title">{{navMenu.entity.alias}}</span>
             </el-menu-item>
-        
+
             <el-submenu v-if="navMenu.childs&&navMenu.entity&&navMenu.entity.state==='ENABLE'"
                         :key="navMenu.entity.id" :data="navMenu" :index="navMenu.entity.name">
                 <template slot="title">
@@ -56,12 +57,12 @@
             </label>
         </div> -->
     </div>
-   
+
 </template>
 <script>
 import { reactive, ref, isRef, toRefs, onMounted, computed } from '@vue//composition-api'
 import { mapState, mapActions } from "vuex";
-import NavSide from './NavSide' 
+import NavSide from './NavSide'
 export default {
     name: 'navMenu',
     components:{
@@ -71,7 +72,7 @@ export default {
         return {
             routers: {},
             routname: '',
-            activeIndex: '/Components/index'
+            activeIndex: '/'
         }
     },
     computed: {
@@ -84,17 +85,19 @@ export default {
         topName() {
             return this.$store.state.app.topNavState
         }
-       
+
     },
     watch: {
-        routers(val){
-            console.log(val)
-        },
+        // routers(val){
+        //     console.log(val[0].path)
+        //     this.activeIndex = val[0].path
+        // },
         routData(newVal,oldVal){
+            console.log(1)
             // console.log(newVal.matched)
         },
         topName(newVal,oldVal) {
-            // console.log(newVal)
+            console.log(newVal)
             this.init(newVal)
         }
     },
@@ -129,7 +132,7 @@ export default {
     // //挂载完成后自动执行
     mounted(){
         // console.log(this.$router.options.routes)
-        // console.log(this.topName)
+        console.log(this.routData)
         this.init(this.topName)
     },
 
@@ -143,12 +146,18 @@ export default {
         init(val) {
             // console.log(val)
             // console.log(this.$router.options.routes)
-            let child = this.$router.options.routes;
-            for(var i in child){
-                if(child[i].type == val){
-                    this.routers = child[i].children
-                }
-            }
+            this.routers = []
+            setTimeout(()=>{
+                  let child = this.$router.options.routes;
+                    for(var i in child){
+                        if(child[i].type == val){
+                            
+                            this.routers = child[i].children
+                        }
+                    }
+                    this.activeIndex =  this.routers[0].path
+            },0)
+          
         }
     }
 }
@@ -159,7 +168,7 @@ export default {
     position: fixed;
     top:75px;
     left:0;
-    width:$navMenu; 
+    width:$navMenu;
     height: calc(100vh - 75px);
     background:#344a5f;
     @include webkit(transition, all .3s ease 0s);

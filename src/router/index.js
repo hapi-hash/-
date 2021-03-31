@@ -75,7 +75,7 @@ export default new Router({
           path: "/console/index",
           name: "/console",
           meta: {
-            name: "首页"
+            name: "企业模块"
           },
           component: Console,
           redirect: "/b/messer",
@@ -160,7 +160,7 @@ export default new Router({
           path: "/user/userlist",
           name: "/user",
           meta: {
-            name: "用户列表"
+            name: "微信用户列表"
           },
           component: () => import("../views/User/userlist.vue"),
         }

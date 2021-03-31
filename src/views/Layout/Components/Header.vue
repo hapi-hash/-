@@ -54,7 +54,8 @@ export default {
         const route = this.$route
          const { meta, path, name, redirectedFrom } = route
         this.activeIndex = redirectedFrom
-        console.log(redirectedFrom)
+        console.log(route)
+        this.fetchNavData();
         // console.log(this.$store.state.route.activeIndex)
         // activeMenu() {
         //     const route = this.$route
