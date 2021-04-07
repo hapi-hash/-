@@ -2,6 +2,9 @@
     <div id="main-wrap">
         <div class="main-content">
             <div class="content">
+                <!-- <keep-alive v-if="this.$route.meat.keepAlive"> -->
+                    <!-- <router-view /> -->
+                <!-- </keep-alive> -->
                 <router-view />
             </div>
         </div>

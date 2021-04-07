@@ -1,46 +1,39 @@
 <template>
     <div id="header-wrap">
-        <div class="pull-left header-icon" @click="navMenuState"><svg-icon iconClass="menu" className="menu" /></div>
-        <div class="headerNav">
-            <!-- {{activeMenu}} -->
-        </div>
-        <div class="pull-right">
+        <!-- <div class="pull-left header-icon" @click="navMenuState"><svg-icon iconClass="menu" className="menu" /></div> -->
+       <!-- <div class="headerNav">
+             {{activeMenu}} 
+        </div>-->
             <el-row>
-                <el-col :span="14">
-                
+                <el-col :span="18">
+                    <!-- :default-active="$route.name" 根据name设置选中状态 -->
                     <el-menu
-                        :default-active="$route.name"
+                        :default-active="$route.name" 
                         class="el-menu-demo"
                         mode="horizontal"
                         active-text-color="#000"
                         @select="handleSelect"
                         :router="true"
                     > 
-                        <!-- <el-menu-item index="/home/index">评优系统</el-menu-item> -->
                         <template v-for="item in routers">
                             <el-menu-item :index="item.path" v-if="!item.hidden" :key="item.id" >{{ item.meta.name }}</el-menu-item>
                         </template>
-                        <!-- <el-menu-item index="/dict">过程管理</el-menu-item> -->
-                        <!-- <el-menu-item index="/info">信息管理</el-menu-item>
-                        <el-menu-item index="/user">用户管理</el-menu-item> -->
                     </el-menu>
-                
                 </el-col>
-                <el-col :span="10">
-                    <div class="user-info">
+                <el-col :span="6">
+                   
                         <img src="@/icons/morentouxiang.png" alt="" class="user-img">
                         管理员
-                    </div>
-                    <div class="header-icon" @click="exit()"><svg-icon iconClass="exit" className="exit" /></div>
+                         <div class="header-icon" @click="exit()"><svg-icon iconClass="exit" className="exit" /></div>
+                   
+                   
                 </el-col>
             </el-row>
-            
-        </div>
+        
     </div>
 </template>
 <script>
 import {reactive, computed } from '@vue/composition-api'
-// import { reactive, ref, isRef, toRefs, onMounted, computed } from '@vue//composition-api'
 export default {
     name:'Header',
     data() {
@@ -54,48 +47,23 @@ export default {
         const route = this.$route
          const { meta, path, name, redirectedFrom } = route
         this.activeIndex = redirectedFrom
-        console.log(route)
         this.fetchNavData();
-        // console.log(this.$store.state.route.activeIndex)
-        // activeMenu() {
-        //     const route = this.$route
-        //     const { meta, path, name } = route
-        //     console.log(name)
-        //     // if set path, the sidebar will highlight the path you set
-        //     // console.log( meta, path)
-        //     if (meta.activeMenu) {
-        //         return meta.activeMenu
-        //     }
-        //     console.log(path)
-        //     this.$store.commit('app/ROU_CHILDER',path)
-        //     return name
-        // }
+        
     },
     computed: {
         activeMenu() {
-        const route = this.$route
-        const { meta, path, name } = route
-        // console.log(path)
-        // if set path, the sidebar will highlight the path you set
-        // console.log( meta, path)
-        if (meta.activeMenu) {
-            return meta.activeMenu
-        }
-        // console.log(path)
-        this.$store.commit('app/ROU_CHILDER',path)
-        return path
-        
+            const route = this.$route
+            const { meta, path, name } = route
+            if (meta.activeMenu) {
+                return meta.activeMenu
+            }
+            this.$store.commit('app/ROU_CHILDER',path)
+            return path
         },
     },
     watch: {
         $route: function(to, from) {
-            
         // 路由改变时执行
-        //console.info("to.path:" + to.path);
-        // this.defaultActiveIndex ='/'+ this.$route.name
-        
-        // this.activeIndex = to.redirectedFrom
-        console.log(this.activeIndex)
         this.$store.commit('app/ROU_CHILDER',to)
         this.fetchNavData();
         this.setCurrentRoute();
@@ -114,32 +82,26 @@ export default {
                 })
             })
         },
-        navMenuState() {
-            this.$store.commit('app/SET_COLLAPSE')
-            // root.$store.dispatch('setMenuStatus', {"name":"aaa"}) 
-        },
+        // navMenuState() {
+        //     this.$store.commit('app/SET_COLLAPSE')
+        // },
         handleSelect(index) {
             this.defaultActiveIndex = index;
-            
-            
         },
         fetchNavData() {
             // 初始化菜单激活项
             let cur_path = this.$route.path; //获取当前路由
             let routers = this.$router.options.routes; // 获取路由对象
-            // console.log(cur_path.split('/'))
             let nav_type = "",
                 nav_name = "";
             for (var i = 0; i < routers.length; i++) {
                 let children = routers[i].children;
-                // console.log((routers[i].type))
                 //如果有childer
                 if (children) {
                 for (let j = 0; j < children.length; j++) {
 
                     // console.log(children[j])
                     if (children[j].path === cur_path) {
-                        console.log(routers[i].name)
                     nav_type = routers[i].type;
                     nav_name = routers[i].name;
                     break;
@@ -237,6 +199,7 @@ export default {
     #header-wrap{ left:$navMenuMin }
 }
 .header-icon{
+    display: inline;
     padding:0 32px;
     svg{
         margin-bottom:-8px;
@@ -245,12 +208,12 @@ export default {
     }
 }
 .pull-right{
-    div{
-        display: inline-block;
-    }
+    // div{
+    //     display: inline-block;
+    // }
 }
 .pull-left{
-    float: left;
+    
 }
 .pull-right{
     // float: right;

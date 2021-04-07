@@ -7,16 +7,16 @@
             <!-- 表单 -->
             <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="login-form" size="medium">
                 <el-form-item prop="username">
-                    <label>邮箱</label>
+                    <label>账号</label>
                     <el-input type="text" v-model="ruleForm.username" autocomplete="off"></el-input>
                 </el-form-item>
                 
                 <el-form-item prop="password">
                     <label>密码</label>
-                    <el-input type="text" v-model="ruleForm.password" autocomplete="off" minlength="6" maxlength="20"></el-input>
+                    <el-input type="text" v-model="ruleForm.password" autocomplete="off" minlength="4" maxlength="20"></el-input>
                 </el-form-item>
 
-                <el-form-item prop="passwords" v-show="model === 'register'">
+                <!-- <el-form-item prop="passwords" v-show="model === 'register'">
                     <label>重复密码</label>
                     <el-input type="text" v-model="ruleForm.passwords" autocomplete="off" minlength="6" maxlength="20"></el-input>
                 </el-form-item>
@@ -32,7 +32,7 @@
                         </el-col>
                     </el-row>
                     
-                </el-form-item>
+                </el-form-item> -->
 
                 <el-form-item>
                     <el-button type="danger" @click="submitForm('ruleForm')" class="login-btn block">提交</el-button>
@@ -50,13 +50,10 @@ export default {
     data(){
       //用户名验证
       var validateUsername = (rule, value, callback) => {
-          //邮箱正则
-        let reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+         
         if (value === '') {
-          callback(new Error('请输入用户名'));
-        } else if(validateEmail(value)){
-            callback(new Error('用户名格式有误'));
-        } else {
+          callback(new Error('请输入账号'));
+        }else {
           callback();
         }
       };
@@ -64,13 +61,11 @@ export default {
       var validatePassword = (rule, value, callback) => { 
         // 过滤特殊字符
         // console.log(stripscript(value))
-        this.ruleForm.password = stripscript(value);
+        // this.ruleForm.password = stripscript(value);
         value = this.ruleForm.password
         //密码正则
         if (value === '') {
           callback(new Error('请输入密码'));
-        } else if (validatePass(value)) {
-          callback(new Error('密码为6至20位数字+字母'));
         } else {
           callback();
         }
@@ -108,13 +103,12 @@ export default {
 
         return {
             menuTab: [
-                { txt: '登录', current: true, type: 'login' },
-                { txt: '注册', current: false, type: 'register' }
+                { txt: '登录', current: true, type: 'login' }
             ],
             model: 'login',
             ruleForm: {
-                username: '1111@qq.com',
-                password: '',
+                username: 'admin',
+                password: '123456',
                 passwords: '',
                 code: ''
             },
@@ -165,26 +159,25 @@ export default {
             this.$refs[formName].validate((valid) => {
                 // if (valid) {  原有判断，判断输入信息格式
                     let requestData = {
-                        username: this.ruleForm.username,
+                        amount: this.ruleForm.username,
                         password: this.ruleForm.password,
-                        passwords: this.ruleForm.passwords,
-                        code: this.ruleForm.code,
+                        
                     }
                     /**
                      *通过vuex 登录接口调用
                      */
-                    console.log(requestData)
-                    this.$store.dispatch('app/login', requestData).then((response) => {
-                        console.log(response)
+                    // console.log(requestData)
+                    this.$store.dispatch('app/login', requestData).then((routes) => {
+                        console.log(routes)
                         // 登录成功跳转的地址
                         this.$router.push({
                             name:'Components'
                         })
                     }).catch((error) => {
                         console.log(error)
-                        this.$router.push({
-                            name:'Components'
-                        })
+                        // this.$router.push({
+                        //     name:'Components'
+                        // })
                     })
                     // this.$router.push({
                     //     name:'Console'
@@ -210,26 +203,7 @@ export default {
                 // }
             });
         },
-        //获取验证码接口调用
-        // getSms(){
-        //     this.codeButtonStatus.status = true;
-        //     this.codeButtonStatus.text = "发送中"
-        //     // if(this.ruleForm.username == ""){
-        //     //     this.$message.error("用户名不能为空")
-        //     //     return false
-        //     // }
-        //     let data = {
-        //         username: sha1(this.ruleForm.username),
-        //         model: this.model
-        //     }
-        //     this.countDown(5);
-        //     // console.log(data)
-        //     GetSms(data).then(response => {
-        //         console.log(response)
-        //     }).catch(error => {
-        //         console.log(error)
-        //     })
-        // },
+        
         /**
          * 倒计时
          */

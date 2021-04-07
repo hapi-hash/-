@@ -25,10 +25,53 @@ export  function GetSms(data){
 export function Login(data){
     return service.request({
         method: 'post',
-        url: '/Orders/confirmOrder',
+        url: '/login/login',
         data: data
     })
 }
 /**
-* 注册
+* 获取路由
 */
+
+export function getRoute(data){
+    return service.request({
+        method: 'get',
+        url: 'index/index',
+        data: data
+    })
+}
+/**
+* 订单管理，商品订单
+*/
+
+export function productOrder(parme,page){
+    let data = Object.assign(parme, page)
+    return service.request({
+        method: 'post',
+        url: 'orders/index',
+        data: data
+    })
+}
+/**
+* 商品管理，品牌列表
+*/
+
+export function goodsBrand(data){
+    return service.request({
+        method: 'get',
+        url: 'goodsbrand/index',
+        params: data
+    })
+}
+
+/**
+* 小伙伴管理，小伙伴列表
+*/
+
+export function supplierList(data){
+    return service.request({
+        method: 'post',
+        url: 'supplier/index',
+        data: data
+    })
+}

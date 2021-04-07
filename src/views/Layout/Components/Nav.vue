@@ -1,23 +1,10 @@
 <template>
     <div id="nav-wrap"  >
         <h1 class="logo"><img src="@/assets/logo.png" alt=""></h1>
-        <!-- <div>
-            <el-menu
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b"
-            default-active="/user/index"
-            router
-            >
-            {{$route.path}}
-            <NavSide :navMenus="routers"></NavSide>
-            </el-menu>
-
-        </div> -->
+      
           <el-menu
             :default-active="$route.path"
             class="el-menu-vertical-demo"
-            :collapse="isCollapse"
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
@@ -37,31 +24,12 @@
                 <el-menu-item v-else :index="item.path" :key="index">{{ item.meta.name }}</el-menu-item>
             </template>
         </el-menu>
-        <!-- <div class="navMenu">
-            <label v-for="(navMenu,index) in routers" :key="index">
-            <el-menu-item v-if="navMenu.childs==null&&navMenu.entity&&navMenu.entity.state==='ENABLE'"
-                            :key="navMenu.entity.id" :data="navMenu" :index="navMenu.entity.name" :route="navMenu.entity.value"
-                            disabled="">
-                <i :class="navMenu.entity.icon"></i>
-                <span slot="title">{{navMenu.entity.alias}}</span>
-            </el-menu-item>
-
-            <el-submenu v-if="navMenu.childs&&navMenu.entity&&navMenu.entity.state==='ENABLE'"
-                        :key="navMenu.entity.id" :data="navMenu" :index="navMenu.entity.name">
-                <template slot="title">
-                <i :class="navMenu.entity.icon"></i>
-                <span> {{navMenu.entity.alias}}</span>
-                </template>
-                <NavMenu :navMenus="navMenu.childs"></NavMenu>
-            </el-submenu>
-            </label>
-        </div> -->
     </div>
 
 </template>
 <script>
-import { reactive, ref, isRef, toRefs, onMounted, computed } from '@vue//composition-api'
-import { mapState, mapActions } from "vuex";
+// import { reactive, ref, isRef, toRefs, onMounted, computed } from '@vue//composition-api'
+// import { mapState, mapActions } from "vuex";
 import NavSide from './NavSide'
 export default {
     name: 'navMenu',
@@ -76,76 +44,33 @@ export default {
         }
     },
     computed: {
-        isCollapse() {
-            this.$store.state.app.isCollapse
-        },
+        //所有路由
         routData(){
       		return this.$store.state.app.rouChilder
     	},
+        //获取对应的children
         topName() {
             return this.$store.state.app.topNavState
         }
 
     },
     watch: {
-        // routers(val){
-        //     console.log(val[0].path)
-        //     this.activeIndex = val[0].path
-        // },
         routData(newVal,oldVal){
-            console.log(1)
-            // console.log(newVal.matched)
         },
         topName(newVal,oldVal) {
-            console.log(newVal)
             this.init(newVal)
         }
     },
-    // setup(props, { root }){
-    //     /**
-    //      * data数据
-    //      */
-    //     // const isCollapse = ref(false)
-    //     const routers = reactive(root.$router.options.routes)
-    //     // console.log(routers)
-    //     /***
-    //      * computed监听
-    //      */
-    //     const isCollapse = computed(() => root.$store.state.app.isCollapse)
-    //     /**
-    //      * 函数
-    //      */
-
-    //     return{
-    //         isCollapse,
-    //         routers
-    //     }
-    // }
-
-
-    //2.0写法
-    // data(){
-    //     return{
-    //         isCollapse: false
-    //     }
-    // },
+   
     // //挂载完成后自动执行
     mounted(){
-        // console.log(this.$router.options.routes)
-        console.log(this.routData)
         this.init(this.topName)
     },
 
     methods:{
-        // handleOpen(key, keyPath) {
-        //     console.log(key, keyPath);
-        // },
-        // handleClose(key, keyPath) {
-        //     console.log(key, keyPath);
-        // }
+       //获取子路由
         init(val) {
-            // console.log(val)
-            // console.log(this.$router.options.routes)
+            
             this.routers = []
             setTimeout(()=>{
                   let child = this.$router.options.routes;

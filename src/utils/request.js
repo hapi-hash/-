@@ -3,9 +3,9 @@ import { Message } from 'element-ui';
 import { getToken } from "@/utils/app";
 
 //创建axios，赋给变量service
-const BASEURL = process.env.NODE_ENV === "production" ? "" : "/api";
+let BASEURL = process.env.NODE_ENV === "production" ? "" : "/api";
 const service = axios.create({
-    baseURL: BASEURL,//域名地址
+    baseURL: 'http://v2.lsqs2021.com/',//域名地址
     timeout: 15000, //超时
 });
 /**
@@ -17,7 +17,8 @@ service.interceptors.request.use(function (config) {
 
     // console.log(config.headers)
     if(getToken()){
-        config.headers.Token = getToken()
+        config.headers.webtoken = getToken()
+        config.headers.platform = 'admin'
     }
     //在请求头添加参数
     
@@ -34,16 +35,19 @@ service.interceptors.request.use(function (config) {
  */
 // 添加响应拦截器
 service.interceptors.response.use(function (response) {
+    // console.log(response.data)
     // 对响应数据做点什么
     let data = response.data;
-
+    // console.log(data)
     //判断请求接口返回是否成功
     if(data.code != 0){ 
         //请求返回的错误字段
-       Message.error(data.msg);
+       Message.error(data.message);
        return Promise.reject(data);
+    }else if(data.code === 500) {
+        console.log("请登录")
     }else{
-        return response;
+        return data;
     }
     
 }, function (error) {
